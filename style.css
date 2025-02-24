@@ -1,0 +1,442 @@
+:root {
+    /* Ana renkler */
+    --primary-women: #FFB5B5;
+    --secondary-women: #FFD1D1;
+    --primary-men: #95B1DB;
+    --secondary-men: #B7C9E5;
+    
+    /* Nötr renkler */
+    --neutral-100: #FFFFFF;
+    --neutral-200: #F8F9FA;
+    --neutral-300: #E9ECEF;
+}
+
+/* Temel stil ayarları */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Ana konteyner */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+/* Navbar */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 15px 40px;
+    background-color: #fff;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo Stili */
+.logo-title {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.logo-title:hover {
+    opacity: 0.8;
+}
+
+/* Başlık Alanı */
+.title-container h1 {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Butonlar ve İstatistikler Alanı */
+.navbar-button-container, .stats-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.stats-container {
+    justify-content: flex-end;
+}
+
+.stats-container h3 {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
+    background: linear-gradient(135deg, var(--neutral-200) 0%, var(--neutral-300) 100%);
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+}
+
+.welcome-content h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-content p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Buton Stilleri */
+.button-men, .button-women {
+    background-color: var(--primary-men);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.button-women {
+    background-color: var(--primary-women);
+}
+
+.welcome-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    gap: 10px;
+}
+
+.welcome-button.men {
+    background: linear-gradient(45deg, var(--primary-men), var(--secondary-men));
+    color: white;
+}
+
+.welcome-button.women {
+    background: linear-gradient(45deg, var(--primary-women), var(--secondary-women));
+    color: white;
+}
+
+.welcome-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.1);
+}
+
+.welcome-button .icon {
+    font-size: 40px;
+}
+
+/* Main Content Area */
+.body-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    background-color: #fff;
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.button-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Image Style */
+#photo {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    background-color: #f8f8f8;
+}
+
+/* Rating Container */
+.rating-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Slider Container */
+.slider-container {
+    width: 100%;
+    position: relative;
+    padding: 20px 0;
+}
+
+/* Rating Slider */
+.rating-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #e0e0e0;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+/* Slider Thumb */
+.rating-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--primary-men);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
+    transition: all 0.2s ease;
+}
+
+.rating-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 50%;
+    background: var(--primary-men);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
+    transition: all 0.2s ease;
+}
+
+/* Slider Value */
+.slider-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary-men);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Theme Colors */
+.women-theme .rating-slider::-webkit-slider-thumb {
+    background: var(--primary-women);
+    box-shadow: 0 0 10px rgba(255, 181, 181, 0.3);
+}
+
+.women-theme .slider-value {
+    background: var(--primary-women);
+}
+
+.men-theme .rating-slider::-webkit-slider-thumb {
+    background: var(--primary-men);
+    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
+}
+
+.men-theme .slider-value {
+    background: var(--primary-men);
+}
+
+/* Rating Labels */
+.rating-labels {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Rate Button */
+.rate-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, var(--primary-women), var(--secondary-women));
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.rate-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.rate-icon {
+    font-size: 20px;
+}
+
+/* Stats Link */
+.stats-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.stats-link:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 10px 20px;
+    }
+
+    .welcome-content {
+        padding: 30px;
+    }
+
+    .button-container {
+        padding: 10px;
+    }
+
+    #photo {
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 10px;
+    }
+
+    .welcome-content h2 {
+        font-size: 24px;
+    }
+
+    .welcome-content p {
+        font-size: 16px;
+    }
+
+    .welcome-button {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+
+    .rating-container {
+        padding: 15px;
+    }
+
+    .rate-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Kadınlar için tema renkleri */
+.women-theme .rating-slider::-webkit-slider-thumb {
+    background: var(--primary-women);
+    box-shadow: 0 0 10px rgba(255, 181, 181, 0.3);
+}
+
+.women-theme .slider-value {
+    background: var(--primary-women);
+}
+
+.women-theme .rate-button {
+    background: linear-gradient(45deg, var(--primary-women), var(--secondary-women));
+}
+
+.women-theme .rate-button:hover {
+    box-shadow: 0 5px 15px rgba(255, 181, 181, 0.3);
+}
+
+/* Erkekler için tema renkleri */
+.men-theme .rating-slider::-webkit-slider-thumb {
+    background: var(--primary-men);
+    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
+}
+
+.men-theme .slider-value {
+    background: var(--primary-men);
+}
+
+.men-theme .rate-button {
+    background: linear-gradient(45deg, var(--primary-men), var(--secondary-men));
+}
+
+.men-theme .rate-button:hover {
+    box-shadow: 0 5px 15px rgba(149, 177, 219, 0.3);
+}
+
+/* Firefox için slider stilleri */
+.women-theme .rating-slider::-moz-range-thumb {
+    background: var(--primary-women);
+    box-shadow: 0 0 10px rgba(255, 181, 181, 0.3);
+}
+
+.men-theme .rating-slider::-moz-range-thumb {
+    background: var(--primary-men);
+    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
+}
+
+.women-theme .rating-slider::-moz-range-progress {
+    background: var(--primary-women);
+}
+
+.men-theme .rating-slider::-moz-range-progress {
+    background: var(--primary-men);
+}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="VibeRater - Fotoğraf Oylama Platformu">
+    <title>VibeRater</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .item-card {
+            border: 1px solid #ddd;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            gap: 20px;
+        }
+        .item-image {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .item-details {
+            flex: 1;
+        }
+        .rating-chart {
+            width: 400px;
+            height: 200px;
+        }
+        .stats {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navbar -->
+        <nav class="navbar-container">
+            <div class="title-container">
+                <h1 class="logo-title" onclick="returnToWelcome()">VibeRater</h1>
+            </div>
+            <div class="stats-container"> 
+                <a href="stats.html" class="stats-link">
+                    <h3>Stats</h3>
+                    <div id="stats"></div>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Welcome Screen -->
+        <main class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+                <h2>VibeRater'a Hoş Geldiniz!</h2>
+                <p>Fotoğrafları puanlamaya başlamak için bir kategori seçin</p>
+                <div class="welcome-buttons">
+                    <button class="welcome-button men" onclick="loadCategory('men')">
+                        <span class="icon">👨</span>
+                        <span>Erkekleri Oyla</span>
+                    </button>
+                    <button class="welcome-button women" onclick="loadCategory('women')">
+                        <span class="icon">👩</span>
+                        <span>Kadınları Oyla</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Rating Section -->
+        <section class="body-container" id="mainContent" style="display: none;">
+            <div class="button-container">
+                <img id="photo" src="" alt="Fotoğraf Yükleniyor" loading="lazy">
+                <div class="rating-container">
+                    <div class="slider-container">
+                        <input type="range" min="1" max="10" value="5" class="rating-slider" id="ratingSlider">
+                        <div class="slider-value" id="sliderValue">5</div>
+                    </div>
+                    <div class="rating-labels">
+                        <span>Kötü</span>
+                        <span>Orta</span>
+                        <span>İyi</span>
+                    </div>
+                    <button id="rateButton" class="rate-button">
+                        <span class="rate-icon">❤️</span>
+                        <span class="rate-text">Oyla</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="stats-container" id="statsContainer">
+        <!-- Veriler JavaScript ile buraya yüklenecek -->
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function fetchStats() {
+            try {
+                const response = await fetch('http://test.umuttopalak.com/items/ratings');
+                const data = await response.json();
+                displayStats(data.items);
+            } catch (error) {
+                console.error('Veri çekme hatası:', error);
+            }
+        }
+
+        function displayStats(items) {
+            const container = document.getElementById('statsContainer');
+            
+            items.forEach((item, index) => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'item-card';
+                
+                const ratingDistribution = item.rating_distribution.split(',').map(Number);
+                
+                itemElement.innerHTML = `
+                    <img src="${item.image_url}" alt="${item.title}" class="item-image">
+                    <div class="item-details">
+                        <h2>${item.title}</h2>
+                        <p>${item.description}</p>
+                        <div class="stats">
+                            <p>Toplam Oy: ${item.total_votes}</p>
+                            <p>Ortalama Puan: ${item.average_rating.toFixed(2)}</p>
+                        </div>
+                        <canvas id="ratingChart${index}" class="rating-chart"></canvas>
+                    </div>
+                `;
+                
+                container.appendChild(itemElement);
+                
+                // Grafik oluşturma
+                const ctx = document.getElementById(`ratingChart${index}`).getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+                        datasets: [{
+                            label: 'Oylama Dağılımı',
+                            data: ratingDistribution,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Sayfa yüklendiğinde verileri çek
+        fetchStats();
+    </script>
+</body>
+</html> 
