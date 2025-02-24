@@ -15,8 +15,9 @@ body {
 .main-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     min-height: 100vh;
+    max-width: 1920px; /* Maksimum genişlik */
+    margin: 0 auto;
 }
 
 /* Navbar */
@@ -24,10 +25,13 @@ body {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 20px;
+    padding: 15px 40px;
     background-color: #fff;
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed; /* Navbar'ı sabit yap */
+    top: 0;
+    z-index: 1000;
 }
 
 /* Başlık Alanı */
@@ -56,38 +60,49 @@ body {
     color: #333;
 }
 
-/* Butonlar */
-button {
+/* Butonlar için yeni stiller */
+.button-men, .button-women {
     background-color: #09122C;
     color: white;
     padding: 10px 20px;
-    margin: 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    opacity: 1;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
+/* Hover efektleri */
 .button-men:hover {
     background-color: #45a049;
+    transform: scale(1.05);
 }
 
 .button-women:hover {
     background-color: #D91656;
+    transform: scale(1.05);
 }
 
-/* Kadın ve Erkek Butonları İçin Ayrı Stiller */
-.button-men {
-    background-color: #09122C;
+/* Aktif kategori stilleri */
+.button-men.active {
+    background-color: #45a049;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
 }
 
-.button-women {
+.button-women.active {
     background-color: #D91656;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+/* İnaktif buton stili */
+.button-men.inactive, .button-women.inactive {
+    opacity: 0.6;
+    transform: scale(0.95);
 }
 
 /* Fotoğraf ve Gövde Alanı */
@@ -98,17 +113,31 @@ button:hover {
     flex-grow: 1;
     width: 100%;
     background-color: #fff;
+    margin-top: 80px; /* Navbar'ın altında kalmayacak şekilde margin */
+    padding: 20px;
 }
 
+/* Fotoğraf container güncellemesi */
 .button-container {
-    text-align: center;
+    width: 100%;
+    max-width: 800px; /* Maksimum fotoğraf genişliği */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
 }
 
+/* Fotoğraf stili güncellemesi */
 #photo {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    margin-bottom: 20px;
-    border-radius: 8px;
+    max-height: 70vh; /* Ekran yüksekliğinin %70'i */
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    background-color: #f8f8f8; /* Fotoğraf yüklenene kadar arka plan */
 }
 
 /* İstatistikler */
@@ -132,17 +161,32 @@ button:hover {
 /* Rating Butonları */
 .rating-buttons {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-top: 20px;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 600px; /* Maksimum buton container genişliği */
+    margin: 20px auto 0;
+    padding: 0 20px;
 }
 
+/* Rating butonları güncellemesi */
 .rating-buttons .button {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-    padding: 0;
-    text-align: center;
+    width: 100%;
+    aspect-ratio: 1;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    background-color: #09122C;
+    color: white;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rating-buttons .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 /* Başlıklar için stil */
@@ -159,4 +203,99 @@ button:hover {
 /* Kadın kategorisi için başlık rengi kırmızı yap */
 .women-title {
     color: #A31D1D; /* Kadın kategorisi için kırmızı başlık rengi */
+}
+
+.stats-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.stats-link:hover {
+    opacity: 0.8;
+}
+
+/* Logo link stili */
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.3s ease;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
+/* Aktif sayfa göstergesi */
+.stats-container.active h3 {
+    position: relative;
+    color: #D91656;
+}
+
+.stats-container.active h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #D91656;
+}
+
+/* Stats content stili */
+.stats-content {
+    width: 80%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stats-content h2 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Responsive tasarım için medya sorguları */
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 10px 20px;
+    }
+
+    .rating-buttons {
+        grid-template-columns: repeat(5, 1fr);
+        max-width: 400px;
+    }
+
+    .button-container {
+        padding: 10px;
+    }
+
+    #photo {
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-container {
+        padding: 10px;
+    }
+
+    .rating-buttons {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        padding: 0 10px;
+    }
+
+    .title-container h1 {
+        font-size: 24px;
+    }
+
+    .button-men, .button-women {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
 }

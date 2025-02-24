@@ -1,0 +1,84 @@
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 20px;
+}
+
+.person-card {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.rank-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #D91656;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 1;
+}
+
+/* İlk 3 için özel rozetler */
+.person-card:nth-child(1) .rank-badge {
+    background-color: gold;
+}
+
+.person-card:nth-child(2) .rank-badge {
+    background-color: silver;
+}
+
+.person-card:nth-child(3) .rank-badge {
+    background-color: #cd7f32; /* Bronze */
+}
+
+.person-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.person-photo {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.person-info {
+    padding: 15px;
+}
+
+.person-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.person-rating {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.total-rating {
+    font-size: 20px;
+    color: #D91656;
+    font-weight: bold;
+}
+
+.average-rating {
+    font-size: 18px;
+    color: #666;
+}
+
+.vote-count {
+    font-size: 14px;
+    color: #888;
+} 

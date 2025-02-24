@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeRater Stats</title>
+    <link rel="stylesheet" href="women_rated.css">
+    <link rel="stylesheet" href="stats.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navbar -->
+        <div class="navbar-container">
+            <div class="title-container">
+                <a href="women_rated.html" class="logo-link">
+                    <h1>VibeRater</h1>
+                </a>
+            </div>
+            <div class="navbar-button-container"> 
+                <button class="button-men" onclick="showStats('men')">Men Stats</button>
+                <button class="button-women" onclick="showStats('women')">Women Stats</button>
+            </div>
+        </div>
+        
+        <!-- Stats Content -->
+        <div class="body-container">
+            <div class="stats-content">
+                <div id="statsContainer" class="stats-grid"></div>
+            </div>
+        </div>
+    </div>
+    <script src="stats.js"></script>
+</body>
+</html> 
