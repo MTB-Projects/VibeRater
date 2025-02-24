@@ -87,6 +87,11 @@ function loadRatings() {
 
 // Kategoriyi yüklemek için fonksiyon
 function loadCategory(category) {
+    // Welcome screen'i gizle
+    document.getElementById('welcomeScreen').style.display = 'none';
+    // Main content'i göster
+    document.getElementById('mainContent').style.display = 'flex';
+
     const body = document.querySelector('body');
     const titleContainer = document.querySelector('.title-container');
     const menBtn = document.getElementById('men-btn');
@@ -115,6 +120,22 @@ function loadCategory(category) {
     // Fotoğrafı yükle
     currentIndex = 0;
     loadPhoto();
+
+    // Slider'ı varsayılan değere resetle
+    const slider = document.getElementById('ratingSlider');
+    const sliderValue = document.getElementById('sliderValue');
+    if (slider && sliderValue) {
+        slider.value = 5;
+        sliderValue.textContent = "5";
+        
+        // Kategori kontrolü
+        if (category === 'women') {
+            slider.style.background = `linear-gradient(to right, #D91656 50%, #e0e0e0 50%)`;
+        } else {
+            slider.style.background = `linear-gradient(to right, #45a049 50%, #e0e0e0 50%)`;
+        }
+    }
+    
     currentCategory = category;
 }
 
@@ -168,5 +189,36 @@ function ratePhoto(rating) {
     loadPhoto();
 }
 
-// Sayfa yüklendiğinde ratingleri yükle
-document.addEventListener('DOMContentLoaded', loadRatings);
+// Sayfa yüklendiğinde
+document.addEventListener('DOMContentLoaded', function() {
+    // Welcome screen'i göster
+    document.getElementById('welcomeScreen').style.display = 'flex';
+    // Main content'i gizle
+    document.getElementById('mainContent').style.display = 'none';
+    
+    // ... mevcut DOMContentLoaded kodları ...
+});
+
+// Slider değerini güncellemek için yeni fonksiyon
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('ratingSlider');
+    const sliderValue = document.getElementById('sliderValue');
+    
+    slider.addEventListener('input', function() {
+        sliderValue.textContent = this.value;
+        
+        // Slider değerine göre renk değişimi
+        const value = (this.value - this.min) / (this.max - this.min) * 100;
+        
+        // Kategori kontrolü
+        if (currentCategory === 'women') {
+            this.style.background = `linear-gradient(to right, #D91656 ${value}%, #e0e0e0 ${value}%)`;
+        } else {
+            this.style.background = `linear-gradient(to right, #45a049 ${value}%, #e0e0e0 ${value}%)`;
+        }
+        
+        // Değer göstergesinin pozisyonunu güncelle
+        const thumbPosition = (value / 100) * (this.offsetWidth - 25);
+        sliderValue.style.left = `${thumbPosition + 12.5}px`;
+    });
+});

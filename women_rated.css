@@ -148,13 +148,13 @@ body {
 
 /* Kadınlar için Tema */
 .women-theme {
-    background-color: #f1c6c6; /* Kadınlara özel arka plan rengi */
+    background-color: #FFF0F5;
     color: #A31D1D; /* Kadınlara özel yazı rengi */
 }
 
 /* Erkekler için Tema */
 .men-theme {
-    background-color: #c6d9f1; /* Erkeklere özel arka plan rengi */
+    background-color: #F0F8FF;
     color: #00879E; /* Erkeklere özel yazı rengi */
 }
 
@@ -298,4 +298,272 @@ body {
         padding: 8px 15px;
         font-size: 14px;
     }
+}
+
+/* Rating container stilleri */
+.rating-container {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Slider container */
+.slider-container {
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+}
+
+/* Slider değer göstergesi */
+.slider-value {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #D91656;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Custom slider tasarımı */
+.rating-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #ff6b6b, #D91656);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.rating-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #D91656;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(217, 22, 86, 0.3);
+    transition: all 0.2s ease;
+}
+
+.rating-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(217, 22, 86, 0.4);
+}
+
+/* Rating etiketleri */
+.rating-labels {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    color: #666;
+    font-size: 14px;
+}
+
+/* Oylama butonu */
+.rate-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 25px;
+    background: linear-gradient(45deg, #D91656, #ff6b6b);
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.rate-button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.rate-icon {
+    font-size: 20px;
+}
+
+/* Responsive tasarım için */
+@media (max-width: 480px) {
+    .rating-container {
+        padding: 15px;
+    }
+    
+    .rate-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+/* Rating container tema renkleri */
+.women-theme .rating-slider {
+    background: linear-gradient(to right, var(--secondary-women), var(--primary-women));
+}
+
+.women-theme .rating-slider::-webkit-slider-thumb {
+    background: #D91656;
+    box-shadow: 0 0 10px rgba(217, 22, 86, 0.3);
+}
+
+.women-theme .slider-value {
+    background: var(--primary-women);
+}
+
+.women-theme .rate-button {
+    background: linear-gradient(45deg, var(--primary-women), var(--secondary-women));
+}
+
+.women-theme .rate-button:hover {
+    box-shadow: 0 5px 15px rgba(217, 22, 86, 0.3);
+}
+
+/* Erkekler için tema renkleri */
+.men-theme .rating-slider {
+    background: linear-gradient(to right, var(--secondary-men), var(--primary-men));
+}
+
+.men-theme .rating-slider::-webkit-slider-thumb {
+    background: #45a049;
+    box-shadow: 0 0 10px rgba(69, 160, 73, 0.3);
+}
+
+.men-theme .slider-value {
+    background: var(--primary-men);
+}
+
+.men-theme .rate-button {
+    background: linear-gradient(45deg, var(--primary-men), var(--secondary-men));
+}
+
+.men-theme .rate-button:hover {
+    box-shadow: 0 5px 15px rgba(69, 160, 73, 0.3);
+}
+
+/* Welcome screen styles */
+.welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
+    background: linear-gradient(135deg, var(--neutral-200) 0%, var(--neutral-300) 100%);
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+}
+
+.welcome-content h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.welcome-content p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.welcome-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 40px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    gap: 10px;
+}
+
+.welcome-button.men {
+    background: linear-gradient(45deg, var(--primary-men), var(--secondary-men));
+    color: white;
+}
+
+.welcome-button.women {
+    background: linear-gradient(45deg, var(--primary-women), var(--secondary-women));
+    color: white;
+}
+
+.welcome-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.1);
+}
+
+.welcome-button .icon {
+    font-size: 40px;
+}
+
+/* Responsive design for welcome screen */
+@media (max-width: 480px) {
+    .welcome-content {
+        padding: 30px;
+    }
+
+    .welcome-content h2 {
+        font-size: 24px;
+    }
+
+    .welcome-content p {
+        font-size: 16px;
+    }
+
+    .welcome-button {
+        padding: 15px 30px;
+        font-size: 16px;
+    }
+}
+
+:root {
+    /* Ana renkler */
+    --primary-women: #FFB5B5;    /* Pastel pembe */
+    --secondary-women: #FFD1D1;  /* Açık pastel pembe */
+    --primary-men: #95B1DB;      /* Pastel mavi */
+    --secondary-men: #B7C9E5;    /* Açık pastel mavi */
+    
+    /* Aksan renkleri */
+    --accent-women: #FFB4B4;
+    --accent-men: #533483;
+    
+    /* Arka plan renkleri */
+    --bg-light: #F5F5F5;
+    --bg-dark: #1B1B1B;
+    
+    /* Nötr renkler */
+    --neutral-100: #FFFFFF;
+    --neutral-200: #F8F9FA;
+    --neutral-300: #E9ECEF;
+    --neutral-400: #DEE2E6;
 }

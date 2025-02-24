@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Women or Man Rated</title>
+    <title>VibeRater</title>
     <link rel="stylesheet" href="women_rated.css">
 </head>
 <body>
@@ -14,7 +14,6 @@
                 <h1>VibeRater</h1>
             </div>
             <div class="navbar-button-container"> 
-                <!-- Men and Women buttons -->
                 <button class="button-men" id="men-btn" onclick="loadCategory('men')">Men</button>
                 <button class="button-women" id="women-btn" onclick="loadCategory('women')">Women</button>
             </div>
@@ -26,25 +25,43 @@
             </div>
         </div>
         
-        <!-- Main Body Section -->
-        <div class="body-container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+                <h2>VibeRater'a Hoş Geldiniz!</h2>
+                <p>Fotoğrafları puanlamaya başlamak için bir kategori seçin</p>
+                <div class="welcome-buttons">
+                    <button class="welcome-button men" onclick="loadCategory('men')">
+                        <span class="icon">👨</span>
+                        <span>Erkekleri Oyla</span>
+                    </button>
+                    <button class="welcome-button women" onclick="loadCategory('women')">
+                        <span class="icon">👩</span>
+                        <span>Kadınları Oyla</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Body Section (initially hidden) -->
+        <div class="body-container" id="mainContent" style="display: none;">
             <div class="button-container">
-                <!-- Dynamic Photo will be inserted here -->
                 <img id="photo" src="" alt="Fotoğraf Yükleniyor">
                 <br>
-                <!-- Rating Buttons -->
-                <div class="rating-buttons">
-                    <!-- Dinamik butonlar yerine döngüyle sayılar arttırılabilir -->
-                    <button class="button" onclick="ratePhoto(1)">1</button>
-                    <button class="button" onclick="ratePhoto(2)">2</button>
-                    <button class="button" onclick="ratePhoto(3)">3</button>
-                    <button class="button" onclick="ratePhoto(4)">4</button>
-                    <button class="button" onclick="ratePhoto(5)">5</button>
-                    <button class="button" onclick="ratePhoto(6)">6</button>
-                    <button class="button" onclick="ratePhoto(7)">7</button>
-                    <button class="button" onclick="ratePhoto(8)">8</button>
-                    <button class="button" onclick="ratePhoto(9)">9</button>
-                    <button class="button" onclick="ratePhoto(10)">10</button>
+                <div class="rating-container">
+                    <div class="slider-container">
+                        <input type="range" min="1" max="10" value="5" class="rating-slider" id="ratingSlider">
+                        <div class="slider-value" id="sliderValue">5</div>
+                    </div>
+                    <div class="rating-labels">
+                        <span>Kötü</span>
+                        <span>Orta</span>
+                        <span>İyi</span>
+                    </div>
+                    <button class="rate-button" onclick="ratePhoto(document.getElementById('ratingSlider').value)">
+                        <span class="rate-icon">❤️</span>
+                        <span class="rate-text">Oyla</span>
+                    </button>
                 </div>
             </div>
         </div>
