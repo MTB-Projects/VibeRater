@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women or Man Rated</title>
+    <link rel="stylesheet" href="women_rated.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navbar -->
+        <div class="navbar-container">
+            <div class="title-container">
+                <h1>VibeRater</h1>
+            </div>
+            <div class="navbar-button-container"> 
+                <!-- Men and Women buttons -->
+                <button class="button-men" id="men-btn" onclick="loadCategory('men')">Men</button>
+                <button class="button-women" id="women-btn" onclick="loadCategory('women')">Women</button>
+            </div>
+            <div class="stats-container"> 
+                <h3>Stats</h3> <!-- H3 daha uygun -->
+                <div id="stats"></div>
+            </div>
+        </div>
+        
+        <!-- Main Body Section -->
+        <div class="body-container">
+            <div class="button-container">
+                <!-- Dynamic Photo will be inserted here -->
+                <img id="photo" src="" alt="Fotoğraf Yükleniyor">
+                <br>
+                <!-- Rating Buttons -->
+                <div class="rating-buttons">
+                    <!-- Dinamik butonlar yerine döngüyle sayılar arttırılabilir -->
+                    <button class="button" onclick="ratePhoto(1)">1</button>
+                    <button class="button" onclick="ratePhoto(2)">2</button>
+                    <button class="button" onclick="ratePhoto(3)">3</button>
+                    <button class="button" onclick="ratePhoto(4)">4</button>
+                    <button class="button" onclick="ratePhoto(5)">5</button>
+                    <button class="button" onclick="ratePhoto(6)">6</button>
+                    <button class="button" onclick="ratePhoto(7)">7</button>
+                    <button class="button" onclick="ratePhoto(8)">8</button>
+                    <button class="button" onclick="ratePhoto(9)">9</button>
+                    <button class="button" onclick="ratePhoto(10)">10</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="women_rated.js"></script>
+</body>
+</html>

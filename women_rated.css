@@ -1,0 +1,162 @@
+/* Temel stil ayarları */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Genel Stil */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* Ana konteyner */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık Alanı */
+.title-container h1 {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Butonlar ve İstatistikler Alanı */
+.navbar-button-container, .stats-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-button-container {
+    gap: 15px;
+}
+
+.stats-container {
+    justify-content: flex-end;
+}
+
+.stats-container h3 {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Butonlar */
+button {
+    background-color: #09122C;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.button-men:hover {
+    background-color: #45a049;
+}
+
+.button-women:hover {
+    background-color: #D91656;
+}
+
+/* Kadın ve Erkek Butonları İçin Ayrı Stiller */
+.button-men {
+    background-color: #09122C;
+}
+
+.button-women {
+    background-color: #D91656;
+}
+
+/* Fotoğraf ve Gövde Alanı */
+.body-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    width: 100%;
+    background-color: #fff;
+}
+
+.button-container {
+    text-align: center;
+}
+
+#photo {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* İstatistikler */
+#stats {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* Kadınlar için Tema */
+.women-theme {
+    background-color: #f1c6c6; /* Kadınlara özel arka plan rengi */
+    color: #A31D1D; /* Kadınlara özel yazı rengi */
+}
+
+/* Erkekler için Tema */
+.men-theme {
+    background-color: #c6d9f1; /* Erkeklere özel arka plan rengi */
+    color: #00879E; /* Erkeklere özel yazı rengi */
+}
+
+/* Rating Butonları */
+.rating-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.rating-buttons .button {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    padding: 0;
+    text-align: center;
+}
+
+/* Başlıklar için stil */
+.title-container {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Erkek kategorisi için başlık rengi mavi yap */
+.men-title {
+    color: #00879E; /* Erkek kategorisi için mavi başlık rengi */
+}
+
+/* Kadın kategorisi için başlık rengi kırmızı yap */
+.women-title {
+    color: #A31D1D; /* Kadın kategorisi için kırmızı başlık rengi */
+}
