@@ -33,7 +33,7 @@ async function fetchStats() {
         
         if (error.message.includes('401')) {
             alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
-            window.location.href = '/pages/login/login.html';
+            window.location.href = '/login.html';
         }
     }
 }

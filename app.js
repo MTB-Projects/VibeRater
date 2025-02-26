@@ -39,7 +39,7 @@ const UI = {
     checkAuth() {
         const token = localStorage.getItem('token');
         if (!token) {
-            window.location.href = '/pages/login/login.html';
+            window.location.href = '/login.html';
         }
     },
 
@@ -108,7 +108,7 @@ async function fetchPhoto() {
         
         if (error.message.includes('401')) {
             alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
-            window.location.href = '/pages/login/login.html';
+            window.location.href = '/login.html';
         }
     }
 }
@@ -157,7 +157,7 @@ async function ratePhoto(rating) {
         } catch (error) {
             console.error('Oylama hatası:', error);
             if (error.message.includes('401')) {
-                window.location.href = '/pages/login/login.html';
+                window.location.href = '/login.html';
             }
         }
     }
@@ -229,7 +229,7 @@ async function fetchStats() {
         
         if (error.message.includes('401')) {
             alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
-            window.location.href = '/pages/login/login.html';
+            window.location.href = '/login.html';
         }
     }
 }
