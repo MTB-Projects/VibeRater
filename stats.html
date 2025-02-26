@@ -3,26 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VibeRater Stats</title>
+    <meta name="description" content="VibeRater - İstatistikler">
+    <title>VibeRater - İstatistikler</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="stats.css">
 </head>
 <body>
     <div class="main-container">
         <!-- Navbar -->
-        <div class="navbar-container">
+        <nav class="navbar-container">
             <div class="title-container">
                 <h1 class="logo-title" onclick="window.location.href='index.html'">VibeRater</h1>
             </div>
-        </div>
-        
-        <!-- Stats Content -->
-        <div class="body-container">
-            <div class="stats-content">
-                <div id="statsContainer" class="stats-grid"></div>
+            <div class="nav-buttons">
+                <a href="index.html" class="nav-link">Ana Sayfa</a>
             </div>
+        </nav>
+
+        <!-- Stats Container -->
+        <div class="stats-container" id="statsContainer">
+            <!-- Veriler JavaScript ile buraya yüklenecek -->
         </div>
     </div>
+
+    <!-- Scripts -->
     <script src="stats.js"></script>
 </body>
 </html> 

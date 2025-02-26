@@ -1,71 +1,22 @@
 // API URLs
 const API_URL = {
     RANDOM: 'https://test.umuttopalak.com/items/random',
-    VOTE: 'https://test.umuttopalak.com/votes/vote'
+    VOTE: 'https://test.umuttopalak.com/votes/vote',
+    RATINGS: 'https://test.umuttopalak.com/items/ratings'
 };
 
+// Global değişkenler
 let currentPhotos = [];
 let currentCategory = '';
 
-// API'den fotoğraf çekme fonksiyonu
-async function fetchPhoto() {
-    try {
-        const response = await fetch(API_URL.RANDOM);
-        const data = await response.json();
-        
-        // Gelen fotoğraf verisini sakla
-        currentPhotos = [{
-            id: data.id,
-            photo: data.image_url
-        }];
-        
-        // Fotoğrafı göster
-        const photoElement = document.getElementById('photo');
-        photoElement.src = data.image_url;
-        
-    } catch (error) {
-        console.error('API hatası:', error);
-    }
-}
-
-// Oylama fonksiyonu
-async function ratePhoto(rating) {
-    if (currentPhotos.length > 0) {
-        const currentPhoto = currentPhotos[0];
-        
-        try {
-            // Oylama isteği gönder
-            const response = await fetch(API_URL.VOTE, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    item_id: currentPhoto.id,
-                    rating: parseInt(rating)
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error('Oylama başarısız');
-            }
-
-            // Oylama başarılı, yeni fotoğraf yükle
-            await fetchPhoto();
-            
-            // Slider'ı sıfırla
-            const slider = document.getElementById('ratingSlider');
-            const sliderValue = document.getElementById('sliderValue');
-            if (slider && sliderValue) {
-                slider.value = 5;
-                sliderValue.textContent = "5";
-                updateSliderColor(slider, 5);
-            }
-
-        } catch (error) {
-            console.error('Oylama hatası:', error);
-        }
-    }
+// API Headers
+function getHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : '',
+        'Accept': 'application/json'
+    };
 }
 
 // UI işlemleri
@@ -80,98 +31,142 @@ const UI = {
     },
 
     init() {
-        this.showWelcomeScreen();
+        this.setupEventListeners();
         this.setupSlider();
-        this.setupRateButton();
+        this.checkAuth();
     },
 
-    showWelcomeScreen() {
-        this.elements.welcomeScreen.style.display = 'flex';
-        this.elements.mainContent.style.display = 'none';
+    checkAuth() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = '/pages/login/login.html';
+        }
     },
 
-    showMainContent() {
-        this.elements.welcomeScreen.style.display = 'none';
-        this.elements.mainContent.style.display = 'flex';
+    setupEventListeners() {
+        // Oylama butonu
+        this.elements.rateButton?.addEventListener('click', () => {
+            const rating = this.elements.slider.value;
+            ratePhoto(rating);
+        });
+
+        // Slider değişimi
+        this.elements.slider?.addEventListener('input', (e) => {
+            this.elements.sliderValue.textContent = e.target.value;
+            updateSliderColor(e.target, e.target.value);
+            
+            // Slider değerini göster
+            const sliderValueElement = document.getElementById('sliderValue');
+            if (sliderValueElement) {
+                sliderValueElement.textContent = e.target.value;
+                sliderValueElement.style.opacity = '1';
+            }
+        });
     },
 
     setupSlider() {
         if (this.elements.slider && this.elements.sliderValue) {
-            this.elements.slider.addEventListener('input', (e) => {
-                const value = e.target.value;
-                this.elements.sliderValue.textContent = value;
-                updateSliderColor(e.target, value);
-            });
-
-            // Başlangıç değerlerini ayarla
             this.elements.sliderValue.textContent = this.elements.slider.value;
             updateSliderColor(this.elements.slider, this.elements.slider.value);
         }
     },
 
-    setupRateButton() {
-        if (this.elements.rateButton) {
-            this.elements.rateButton.addEventListener('click', () => {
-                const rating = this.elements.slider.value;
-                console.log('Oylama butonu tıklandı, rating:', rating);
-                ratePhoto(rating);
-            });
-        }
-    },
-
-    updatePhoto() {
-        if (currentPhotos.length > 0) {
-            this.elements.photo.src = currentPhotos[0].photo;
-            this.elements.photo.alt = currentPhotos[0].name;
+    updatePhoto(photoData) {
+        if (photoData) {
+            this.elements.photo.src = photoData.photo;
+            this.elements.photo.alt = photoData.name || 'Fotoğraf';
         } else {
-            this.elements.photo.src = "";
-            this.elements.photo.alt = "Fotoğraf yüklenemedi";
+            this.elements.photo.src = '';
+            this.elements.photo.alt = 'Fotoğraf yüklenemedi';
         }
     }
 };
 
-// Global setupSlider fonksiyonunu kaldır
-document.addEventListener('DOMContentLoaded', async () => {
-    // İlk fotoğrafı yükle
-    await fetchPhoto();
-    
-    // Oylama butonuna tıklanınca
-    const rateButton = document.getElementById('rateButton');
-    rateButton.addEventListener('click', () => {
-        const rating = document.getElementById('ratingSlider').value;
-        ratePhoto(rating);
-    });
+// Fotoğraf ve oylama işlemleri
+async function fetchPhoto() {
+    try {
+        const response = await fetch(`${API_URL.RANDOM}?gender=${currentCategory}`, {
+            method: 'GET',
+            headers: getHeaders()
+        });
 
-    // UI'ı başlat
-    UI.init();
-});
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-function loadCategory(category) {
-    document.getElementById('welcomeScreen').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex';
-
-    currentCategory = category;
-    document.body.classList.add(category === 'women' ? 'women-theme' : 'men-theme');
-    document.body.classList.remove(category === 'women' ? 'men-theme' : 'women-theme');
-
-    loadPhoto();
-    resetSlider();
-}
-
-function loadPhoto() {
-    const photoElement = document.getElementById('photo');
-    if (currentPhotos.length > 0) {
-        photoElement.src = currentPhotos[0].photo;
-        photoElement.alt = currentPhotos[0].name;
-    } else {
-        photoElement.src = "";
-        photoElement.alt = "Fotoğraf yüklenemedi";
+        const data = await response.json();
+        currentPhotos = [{
+            id: data.id,
+            photo: data.image_url,
+            name: data.title
+        }];
+        UI.updatePhoto(currentPhotos[0]);
+    } catch (error) {
+        console.error('Fotoğraf yükleme hatası:', error);
+        currentPhotos = [];
+        UI.updatePhoto(null);
+        
+        if (error.message.includes('401')) {
+            alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
+            window.location.href = '/pages/login/login.html';
+        }
     }
 }
 
+async function ratePhoto(rating) {
+    if (currentPhotos.length > 0) {
+        try {
+            const sliderValue = UI.elements.slider.value;
+            
+            const response = await fetch(API_URL.VOTE, {
+                method: 'POST',
+                headers: getHeaders(),
+                body: JSON.stringify({
+                    item_id: currentPhotos[0].id,
+                    rating: parseInt(sliderValue)
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // API'den güncel istatistikleri al
+            const statsResponse = await fetch(API_URL.RATINGS, {
+                method: 'GET',
+                headers: getHeaders()
+            });
+
+            if (statsResponse.ok) {
+                const statsData = await statsResponse.json();
+                // Oylanmış kişinin güncel verilerini bul
+                const updatedItem = statsData.items.find(item => item.id === currentPhotos[0].id);
+                if (updatedItem) {
+                    // Stats sayfasında ilgili kişinin rating score'unu güncelle
+                    const ratingElement = document.querySelector(`[data-item-id="${currentPhotos[0].id}"]`);
+                    if (ratingElement) {
+                        ratingElement.textContent = `⭐ ${updatedItem.average_rating.toFixed(1)}`;
+                    }
+                }
+            }
+
+            // Yeni fotoğraf yükle
+            await fetchPhoto();
+            resetSlider();
+
+        } catch (error) {
+            console.error('Oylama hatası:', error);
+            if (error.message.includes('401')) {
+                window.location.href = '/pages/login/login.html';
+            }
+        }
+    }
+}
+
+// Yardımcı fonksiyonlar
 function updateSliderColor(slider, value) {
     const percent = ((value - slider.min) / (slider.max - slider.min)) * 100;
-    const color = currentCategory === 'women' ? 'var(--primary-women)' : 'var(--primary-men)';
+    const color = currentCategory === 'FEMALE' ? 'var(--primary-women)' : 'var(--primary-men)';
     
     slider.style.background = `linear-gradient(to right, 
         ${color} 0%, 
@@ -182,29 +177,121 @@ function updateSliderColor(slider, value) {
 }
 
 function resetSlider() {
-    const slider = document.getElementById('ratingSlider');
-    const sliderValue = document.getElementById('sliderValue');
+    const slider = UI.elements.slider;
+    const sliderValue = UI.elements.sliderValue;
     if (slider && sliderValue) {
         slider.value = 5;
-        sliderValue.textContent = "5";
+        sliderValue.textContent = '5';
         updateSliderColor(slider, 5);
     }
 }
 
-function returnToWelcome() {
-    document.getElementById('mainContent').style.display = 'none';
-    document.getElementById('welcomeScreen').style.display = 'flex';
+// Kategori ve ekran yönetimi
+window.loadCategory = function(category) {
+    UI.elements.welcomeScreen.style.display = 'none';
+    UI.elements.mainContent.style.display = 'flex';
+
+    currentCategory = category === 'men' ? 'MALE' : 'FEMALE';
+    
+    document.body.classList.add(category === 'men' ? 'men-theme' : 'women-theme');
+    document.body.classList.remove(category === 'men' ? 'women-theme' : 'men-theme');
+
+    fetchPhoto();
+    resetSlider();
+};
+
+window.returnToWelcome = function() {
+    UI.elements.mainContent.style.display = 'none';
+    UI.elements.welcomeScreen.style.display = 'flex';
     document.body.classList.remove('women-theme', 'men-theme');
     resetSlider();
     
     currentCategory = '';
     currentPhotos = [];
+};
+
+// İstatistik işlemleri
+async function fetchStats() {
+    try {
+        const response = await fetch(API_URL.RATINGS, {
+            method: 'GET',
+            headers: getHeaders()
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        displayStats(data.items);
+    } catch (error) {
+        console.error('Veri çekme hatası:', error);
+        
+        if (error.message.includes('401')) {
+            alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
+            window.location.href = '/pages/login/login.html';
+        }
+    }
 }
 
-// Slider'ı başlangıçta da güncelle
+function displayStats(items) {
+    const container = document.getElementById('statsContainer');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    items.forEach((item, index) => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item-card';
+        
+        const ratingDistribution = item.rating_distribution.split(',').map(Number);
+        
+        itemElement.innerHTML = `
+            <img src="${item.image_url}" alt="${item.title}" class="item-image">
+            <div class="item-details">
+                <h2>${item.title}</h2>
+                <p>${item.description}</p>
+                <div class="stats">
+                    <p>Toplam Oy: ${item.total_votes}</p>
+                    <p>Ortalama Puan: ${item.average_rating.toFixed(2)}</p>
+                </div>
+                <canvas id="ratingChart${index}" class="rating-chart"></canvas>
+            </div>
+        `;
+        
+        container.appendChild(itemElement);
+        createChart(`ratingChart${index}`, ratingDistribution);
+    });
+}
+
+function createChart(canvasId, data) {
+    const ctx = document.getElementById(canvasId)?.getContext('2d');
+    if (!ctx) return;
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            datasets: [{
+                label: 'Oylama Dağılımı',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// Sayfa yüklendiğinde
 document.addEventListener('DOMContentLoaded', () => {
-    const slider = document.getElementById('ratingSlider');
-    if (slider) {
-        updateSliderColor(slider, slider.value);
-    }
+    UI.init();
+    fetchStats();
 }); 
