@@ -1,3 +1,4 @@
+/* Ana değişkenler */
 :root {
     /* Ana renkler */
     --primary-women: #FFB5B5;
@@ -9,6 +10,13 @@
     --neutral-100: #FFFFFF;
     --neutral-200: #F8F9FA;
     --neutral-300: #E9ECEF;
+    
+    /* Gölgeler */
+    --card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    /* Arka plan renkleri */
+    --body-bg: #f9f9f9;
+    --card-bg: #ffffff;
 }
 
 /* Temel stil ayarları */
@@ -20,10 +28,10 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+    background-color: var(--body-bg);
 }
 
-/* Ana konteyner */
+/* Ana konteyner ve layout */
 .main-container {
     display: flex;
     flex-direction: column;
@@ -32,18 +40,120 @@ body {
     margin: 0 auto;
 }
 
-/* Navbar */
+/* Navbar stilleri */
 .navbar-container {
     display: flex;
     justify-content: space-between;
     width: 100%;
     padding: 15px 40px;
-    background-color: #fff;
+    background-color: var(--neutral-100);
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--card-shadow);
     position: fixed;
     top: 0;
     z-index: 1000;
+}
+
+.title-container .logo-title {
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+/* Welcome ekranı stilleri */
+.welcome-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
+}
+
+.welcome-content {
+    text-align: center;
+    padding: 40px;
+}
+
+.welcome-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+/* Tema stilleri */
+.women-theme .welcome-button.women,
+.women-theme .rate-button {
+    background: linear-gradient(135deg, var(--primary-women), var(--secondary-women));
+}
+
+.men-theme .welcome-button.men,
+.men-theme .rate-button {
+    background: linear-gradient(135deg, var(--primary-men), var(--secondary-men));
+}
+
+/* Ortak buton stilleri */
+.welcome-button, .rate-button {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    font-weight: bold;
+}
+
+.welcome-button:hover,
+.rate-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Stats container stilleri */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 30px;
+    margin-top: 80px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Kart stilleri */
+.item-card {
+    border: 1px solid var(--neutral-300);
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    gap: 20px;
+    background: var(--card-bg);
+    box-shadow: var(--card-shadow);
+}
+
+/* Görsel stilleri */
+.item-image {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* İçerik stilleri */
+.item-details {
+    flex: 1;
+}
+
+.rating-chart {
+    width: 400px;
+    height: 200px;
+}
+
+.stats {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #666;
 }
 
 /* Logo Stili */
@@ -219,42 +329,29 @@ body {
 /* Slider Container */
 .slider-container {
     width: 100%;
+    margin: 20px 0;
     position: relative;
-    padding: 20px 0;
 }
 
 /* Rating Slider */
 .rating-slider {
-    -webkit-appearance: none;
     width: 100%;
-    height: 10px;
-    border-radius: 5px;
+    height: 8px;
+    -webkit-appearance: none;
     background: #e0e0e0;
     outline: none;
-    transition: all 0.2s ease;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 /* Slider Thumb */
 .rating-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: var(--primary-men);
     cursor: pointer;
-    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
-    transition: all 0.2s ease;
-}
-
-.rating-slider::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border: none;
-    border-radius: 50%;
-    background: var(--primary-men);
-    cursor: pointer;
-    box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 /* Slider Value */
@@ -263,12 +360,13 @@ body {
     top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--primary-men);
-    color: white;
     padding: 5px 10px;
-    border-radius: 20px;
+    border-radius: 4px;
+    color: white;
     font-weight: bold;
-    transition: all 0.2s ease;
+    background: var(--primary-men);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 /* Theme Colors */
@@ -277,24 +375,16 @@ body {
     box-shadow: 0 0 10px rgba(255, 181, 181, 0.3);
 }
 
-.women-theme .slider-value {
-    background: var(--primary-women);
-}
-
 .men-theme .rating-slider::-webkit-slider-thumb {
     background: var(--primary-men);
     box-shadow: 0 0 10px rgba(149, 177, 219, 0.3);
-}
-
-.men-theme .slider-value {
-    background: var(--primary-men);
 }
 
 /* Rating Labels */
 .rating-labels {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    margin-top: 10px;
     color: #666;
     font-size: 14px;
 }
@@ -438,5 +528,221 @@ body {
 }
 
 .men-theme .rating-slider::-moz-range-progress {
+    background: var(--primary-men);
+}
+
+/* Fotoğraf container stilleri */
+.photo-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    text-align: center;
+}
+
+.photo-container img {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+}
+
+.button-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.rating-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Stats sayfası stilleri */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 30px;
+    margin-top: 80px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.person-card {
+    background: var(--card-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid var(--neutral-300);
+}
+
+.person-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.rank-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 18px;
+    backdrop-filter: blur(5px);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.rank-badge.top-rank {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.rank-emoji {
+    font-size: 24px;
+}
+
+.rank-number {
+    font-size: 18px;
+}
+
+.person-card:hover .rank-badge {
+    transform: scale(1.1) translateY(-2px);
+}
+
+.person-photo {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.person-info {
+    padding: 20px;
+    background: linear-gradient(to bottom, var(--neutral-100), var(--neutral-200));
+    text-align: center;
+}
+
+.person-name {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.vote-info {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 18px;
+}
+
+.vote-count, .rating-score {
+    background: var(--neutral-300);
+    padding: 8px 15px;
+    border-radius: 20px;
+    color: #444;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating-score {
+    background: rgba(241, 196, 15, 0.2);
+    color: #f1c40f;
+    font-weight: bold;
+}
+
+/* Responsive tasarım */
+@media (max-width: 1400px) {
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .person-photo {
+        height: 400px;
+    }
+
+    .photo-container {
+        max-width: 450px;
+    }
+    
+    .photo-container img {
+        max-height: 50vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-container {
+        padding: 15px;
+    }
+
+    .person-photo {
+        height: 350px;
+    }
+
+    .person-info {
+        padding: 15px;
+    }
+
+    .person-name {
+        font-size: 20px;
+    }
+
+    .vote-info {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .vote-count, .rating-score {
+        font-size: 16px;
+        padding: 6px 12px;
+    }
+}
+
+/* Navbar butonları için container stili güncelleme */
+.nav-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+.nav-link:hover {
+    opacity: 0.8;
+}
+
+.women-theme .slider-value {
+    background: var(--primary-women);
+}
+
+.men-theme .slider-value {
     background: var(--primary-men);
 }

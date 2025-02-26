@@ -1,60 +1,89 @@
 // API URLs
 const API_URL = {
-    RANDOM: 'https://test.umuttopalak.com/items/random',
-    VOTE: 'https://test.umuttopalak.com/votes/vote',
-    STATS: 'https://test.umuttopalak.com/items/ratings'
+    RATINGS: 'https://test.umuttopalak.com/items/ratings'
 };
 
-async function showStats() {
-    const container = document.getElementById('statsContainer');
-    
+// API Headers
+function getHeaders() {
+    const token = localStorage.getItem('token');
+    return {
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : '',
+        'Accept': 'application/json'
+    };
+}
+
+async function fetchStats() {
     try {
-        // API'den istatistikleri al
-        const response = await fetch(`${API_URL.STATS}`);
-        const data = await response.json();
-        
-        // data.items array'ini average_rating'e göre sıralayalım
-        const sortedItems = data.items.sort((a, b) => b.average_rating - a.average_rating);
-        
-        // Sıralama numarası için sayaç
-        let rank = 1;
-        
-        // En az bir oyu olan fotoğrafları göster
-        sortedItems.forEach((item, index) => {
-            if (item.total_votes > 0) {
-                const card = createPersonCard(item, rank);
-                container.appendChild(card);
-                rank++;
-            }
+        const response = await fetch(API_URL.RATINGS, {
+            method: 'GET',
+            headers: getHeaders()
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // Ortalama puana göre sırala
+        const sortedItems = data.items.sort((a, b) => b.average_rating - a.average_rating);
+        displayStats(sortedItems);
     } catch (error) {
-        console.error('Stats yüklenirken hata:', error);
-        container.innerHTML = '<div class="error">İstatistikler yüklenirken bir hata oluştu.</div>';
+        console.error('Veri çekme hatası:', error);
+        
+        if (error.message.includes('401')) {
+            alert('Oturum süreniz dolmuş. Lütfen tekrar giriş yapın.');
+            window.location.href = '/login.html';
+        }
     }
 }
 
-function createPersonCard(item, rank) {
-    const card = document.createElement('div');
-    card.className = 'person-card';
+function displayStats(items) {
+    const container = document.getElementById('statsContainer');
+    if (!container) return;
     
-    card.innerHTML = `
-        <div class="rank-badge">#${rank}</div>
-        <img src="${item.image_url}" alt="Photo ${item.id}" class="person-photo">
-        <div class="person-info">
-            <div class="person-rating">
-                <div class="average-rating">
-                    ${item.average_rating.toFixed(1)} ⭐
-                </div>
-                <div class="total-votes">
-                    ${item.total_votes} oy
-                </div>
-            </div>
-        </div>
-    `;
+    container.innerHTML = '';
     
-    return card;
+    // Ortalama puana göre sırala
+    const sortedItems = items.sort((a, b) => b.average_rating - a.average_rating);
+    
+    sortedItems.forEach((item, index) => {
+        if (item.total_votes > 0) {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'person-card';
+            const rank = index + 1;
+            
+            // Sıralama simgesini belirle
+            let rankEmoji = '🏆';
+            if (rank === 1) {
+                rankEmoji = '👑';
+            } else if (rank === 2) {
+                rankEmoji = '🥈';
+            } else if (rank === 3) {
+                rankEmoji = '🥉';
+            }
+            
+            itemElement.innerHTML = `
+                <div class="rank-badge ${rank <= 3 ? 'top-rank' : ''}">
+                    <span class="rank-emoji">${rankEmoji}</span>
+                    <span class="rank-number">#${rank}</span>
+                </div>
+                <img src="${item.image_url}" alt="${item.title}" class="person-photo">
+                <div class="person-info">
+                    <h2 class="person-name">${item.title}</h2>
+                    <div class="vote-info">
+                        <span class="rating-score">⭐ ${item.average_rating.toFixed(1)}</span>
+                        <span class="vote-count" data-item-id="${item.id}">👥 ${item.total_votes}</span>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(itemElement);
+        }
+    });
 }
 
-// Sayfa yüklendiğinde stats'i göster
-document.addEventListener('DOMContentLoaded', showStats); 
+// Sayfa yüklendiğinde
+document.addEventListener('DOMContentLoaded', () => {
+    fetchStats();
+}); 
