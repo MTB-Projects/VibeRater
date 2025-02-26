@@ -1,8 +1,8 @@
 // API URLs
 const API_URL = {
-    RANDOM: 'http://test.umuttopalak.com/items/random',
-    VOTE: 'http://test.umuttopalak.com/votes/vote',
-    STATS: 'http://test.umuttopalak.com/items/ratings'
+    RANDOM: 'https://test.umuttopalak.com/items/random',
+    VOTE: 'https://test.umuttopalak.com/votes/vote',
+    STATS: 'https://test.umuttopalak.com/items/ratings'
 };
 
 async function showStats() {

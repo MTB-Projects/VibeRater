@@ -1,7 +1,7 @@
 // API URLs
 const API_URL = {
-    RANDOM: 'http://test.umuttopalak.com/items/random',
-    VOTE: 'http://test.umuttopalak.com/votes/vote'
+    RANDOM: 'https://test.umuttopalak.com/items/random',
+    VOTE: 'https://test.umuttopalak.com/votes/vote'
 };
 
 let currentPhotos = [];
