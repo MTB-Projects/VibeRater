@@ -59,7 +59,7 @@ async function loadProfile() {
         console.error('Profil yükleme hatası:', error);
         if (error.message.includes('401')) {
             localStorage.removeItem('token');
-            window.location.href = 'login.html';
+            window.location.href = '/login.html';
         }
     }
 }
@@ -206,7 +206,7 @@ document.getElementById('photoUploadInput').addEventListener('change', async (e)
 
                 if (response.status === 401) {
                     localStorage.removeItem('token');
-                    window.location.href = 'login.html';
+                    window.location.href = '/login.html';
                     return;
                 }
 
