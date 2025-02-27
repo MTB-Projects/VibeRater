@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeRater - Profil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <div class="main-container">
+        <!-- Navbar -->
+        <nav class="navbar-container">
+            <div class="title-container">
+                <h1 class="logo-title" onclick="window.location.href='index.html'">VibeRater</h1>
+            </div>
+            <div class="nav-buttons">
+                <a href="stats.html" class="nav-link">İstatistikler</a>
+                <a href="profile.html" class="nav-link profile-link active">
+                    <span class="profile-icon">👤</span>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Profile Container -->
+        <div class="profile-container">
+            <!-- Sol Kısım - Profil Bilgileri -->
+            <div class="profile-info">
+                <div class="profile-image">
+                    <img src="default-avatar.png" alt="Profil Fotoğrafı" id="profileImage">
+                    <div class="profile-image-overlay">
+                        <label for="profilePhotoInput" class="change-photo-btn">
+                            <span class="upload-icon">📷</span>
+                        </label>
+                        <input type="file" id="profilePhotoInput" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+                <h2 class="username" id="username">Kullanıcı Adı</h2>
+                <span class="gender-tag" id="gender">Cinsiyet</span>
+            </div>
+
+            <!-- Sağ Kısım - Fotoğraflar ve Oylamalar -->
+            <div class="profile-content">
+                <!-- Tab Başlıkları -->
+                <div class="profile-tabs">
+                    <button class="tab-button active" data-tab="photos">
+                        <span class="tab-icon">📸</span>
+                        Fotoğraflarım
+                    </button>
+                    <button class="tab-button" data-tab="rated">
+                        <span class="tab-icon">⭐</span>
+                        Oyladıklarım
+                    </button>
+                </div>
+
+                <!-- Tab İçerikleri -->
+                <div class="tab-content">
+                    <!-- Fotoğraflarım Tab'i -->
+                    <div class="tab-pane fade active" id="photosTab">
+                        <div class="upload-section">
+                            <label for="photoUploadInput" class="upload-button">
+                                <span class="upload-icon">➕</span>
+                                <span>Fotoğraf Yükle</span>
+                            </label>
+                            <input type="file" id="photoUploadInput" accept="image/*" multiple style="display: none;">
+                        </div>
+                        <div class="photos-grid" id="userPhotos">
+                            <!-- Fotoğraflar JavaScript ile eklenecek -->
+                        </div>
+                    </div>
+
+                    <!-- Oyladıklarım Tab'i -->
+                    <div class="tab-pane fade" id="ratedTab">
+                        <div class="rated-grid" id="ratedPhotos">
+                            <!-- Oylanmış fotoğraflar JavaScript ile eklenecek -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script>
+</body>
+</html> 

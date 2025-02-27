@@ -1,0 +1,363 @@
+.profile-container {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+    margin-top: 80px;
+    max-width: 1400px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+/* Sol Kısım - Profil Bilgileri */
+.profile-info {
+    flex: 0 0 250px;
+    height: fit-content;
+    padding: 25px;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    text-align: left;
+    position: sticky;
+    top: 100px;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 0 20px 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--neutral-200);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    cursor: pointer;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+}
+
+.profile-image:hover .profile-image-overlay {
+    opacity: 1;
+}
+
+.change-photo-btn {
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.change-photo-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+.username {
+    font-size: 24px;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.gender-tag {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--neutral-200);
+    border-radius: 30px;
+    font-size: 14px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* Sağ Kısım - Tab'ler ve İçerik */
+.profile-content {
+    flex: 1;
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    min-height: 600px;
+    max-width: none;
+}
+
+.profile-tabs {
+    display: flex;
+    padding: 0 20px;
+    background: var(--neutral-100);
+    border-bottom: 2px solid var(--neutral-200);
+}
+
+.tab-button {
+    padding: 20px 30px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-icon {
+    font-size: 20px;
+}
+
+.tab-button:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-men);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.tab-button.active {
+    color: var(--text-dark);
+}
+
+.tab-button.active:after {
+    transform: scaleX(1);
+}
+
+/* Tab İçerik Stilleri */
+.tab-content {
+    position: relative;
+    min-height: 400px;
+}
+
+.tab-pane {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.tab-pane.active {
+    opacity: 1;
+    visibility: visible;
+    position: relative;
+}
+
+/* Fade Efekti */
+.fade {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade:not(.active) {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Fotoğraf Grid'leri */
+.photos-grid,
+.rated-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 30px;
+}
+
+.photo-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.photo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-item .delete-photo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.photo-item:hover .delete-photo {
+    opacity: 1;
+}
+
+/* Fotoğraf Yükleme Bölümü */
+.upload-section {
+    padding: 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--neutral-200);
+}
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background: var(--primary-men);
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.upload-button:hover {
+    background: var(--secondary-men);
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    font-size: 20px;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 1200px) {
+    .profile-container {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        flex-direction: column;
+        margin-left: 15px;
+        margin-right: 15px;
+        padding: 20px;
+    }
+
+    .profile-info {
+        position: static;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .profile-image {
+        margin: 0 auto 20px;
+    }
+
+    .tab-button {
+        padding: 15px 20px;
+        min-width: auto;
+    }
+
+    .photos-grid,
+    .rated-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        padding: 15px;
+    }
+}
+
+/* Oylanmış fotoğraf kartı stilleri */
+.rated-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    background: var(--card-bg);
+}
+
+.rated-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.rating-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.username {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.gender-icon {
+    font-size: 16px;
+}
+
+.rating-score {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--primary-men);
+}
+
+.rate-date {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* Grid düzeni */
+.rated-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 30px;
+} 

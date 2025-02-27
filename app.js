@@ -85,16 +85,25 @@ const UI = {
 // Fotoğraf ve oylama işlemleri
 async function fetchPhoto() {
     try {
+        // URL'i konsola yazdıralım ve kontrol edelim
+        console.log(`Fetching: ${API_URL.RANDOM}?gender=${currentCategory}`);
+        
         const response = await fetch(`${API_URL.RANDOM}?gender=${currentCategory}`, {
             method: 'GET',
             headers: getHeaders()
         });
+
+        // Response detaylarını görelim
+        console.log('Response status:', response.status);
+        console.log('Response headers:', response.headers);
 
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+        console.log('Received data:', data); // Gelen veriyi kontrol edelim
+
         currentPhotos = [{
             id: data.id,
             photo: data.image_url,
