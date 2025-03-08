@@ -1,6 +1,6 @@
 // API URLs
 const API_URL = {
-    RATINGS: 'https://test.umuttopalak.com/items/ratings'
+    RATINGS: 'https://vibrater.umuttopalak.com/items/ratings'
 };
 
 // API Headers
