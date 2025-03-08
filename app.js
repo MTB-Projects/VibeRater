@@ -1,9 +1,9 @@
 // API URLs
 const API_URL = {
-    RANDOM: 'https://viberater.umuttopalak.com/items/random',
-    RANDOM_FALLBACK: 'https://viberater.umuttopalak.com/items/sample', // Yedek endpoint (aynı domainde farklı bir yol)
-    VOTE: 'https://viberater.umuttopalak.com/votes/vote',
-    RATINGS: 'https://viberater.umuttopalak.com/items/ratings'
+    RANDOM: 'https://api.viberater.fun/items/random',
+    RANDOM_FALLBACK: 'https://api.viberater.fun/items/sample', // Yedek endpoint (aynı domainde farklı bir yol)
+    VOTE: 'https://api.viberater.fun/votes/vote',
+    RATINGS: 'https://api.viberater.fun/items/ratings'
 };
 
 // Yedek statik veri (API çalışmadığında gösterilecek)
