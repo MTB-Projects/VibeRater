@@ -1,5 +1,5 @@
 // Base URL
-const BASE_URL = 'https://viberater.umuttopalak.com';
+const BASE_URL = 'https://api.viberater.fun';
 
 // API URLs
 const API_URL = {
