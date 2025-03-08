@@ -1,8 +1,8 @@
 // API URLs
 const API_URL = {
-    RANDOM: 'https://test.umuttopalak.com/items/random',
-    VOTE: 'https://test.umuttopalak.com/votes/vote',
-    RATINGS: 'https://test.umuttopalak.com/items/ratings'
+    RANDOM: 'https://vibrater.umuttopalak.com/items/random',
+    VOTE: 'https://vibrater.umuttopalak.com/votes/vote',
+    RATINGS: 'https://vibrater.umuttopalak.com/items/ratings'
 };
 
 // Global değişkenler
