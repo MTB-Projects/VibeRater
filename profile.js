@@ -1,5 +1,5 @@
 // Base URL
-const BASE_URL = 'https://test.umuttopalak.com';
+const BASE_URL = 'https://viberater.umuttopalak.com';
 
 // API URLs
 const API_URL = {
@@ -21,6 +21,15 @@ function getHeaders() {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
     };
+}
+
+// Çıkış yapma fonksiyonu
+function logout() {
+    // Token'ı localStorage'dan sil
+    localStorage.removeItem('token');
+    
+    // Kullanıcıyı login sayfasına yönlendir
+    window.location.href = '/login.html';
 }
 
 // Profil bilgilerini yükle ve göster
@@ -108,11 +117,28 @@ function displayPhotos(photos, containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
 
-    photos.forEach(photo => {
+    // Geçerli fotoğrafları filtrele
+    const validPhotos = photos.filter(photo => 
+        photo && 
+        photo.image_url && 
+        photo.image_url !== '' && 
+        !photo.image_url.includes('300x300.jpg')
+    );
+
+    if (validPhotos.length === 0) {
+        container.innerHTML = `
+            <div class="no-photos-message">
+                <p>Henüz fotoğraf yüklenmemiş.</p>
+            </div>
+        `;
+        return;
+    }
+
+    validPhotos.forEach(photo => {
         const photoElement = document.createElement('div');
         photoElement.className = 'photo-item';
         photoElement.innerHTML = `
-            <img src="${photo.image_url}" alt="${photo.title}">
+            <img src="${photo.image_url}" alt="${photo.title}" onerror="this.onerror=null; this.src='default-photo.png'; this.alt='Fotoğraf yüklenemedi';">
             <div class="delete-photo" onclick="deletePhoto('${photo.id}')">✖</div>
         `;
         container.appendChild(photoElement);
@@ -124,12 +150,29 @@ function displayRatedPhotos(photos, containerId) {
     const container = document.getElementById(containerId);
     container.innerHTML = '';
 
-    photos.forEach(photo => {
+    // Geçerli fotoğrafları filtrele
+    const validPhotos = photos.filter(photo => 
+        photo && 
+        photo.image_url && 
+        photo.image_url !== '' && 
+        !photo.image_url.includes('300x300.jpg')
+    );
+
+    if (validPhotos.length === 0) {
+        container.innerHTML = `
+            <div class="no-photos-message">
+                <p>Henüz fotoğraf oylanmamış.</p>
+            </div>
+        `;
+        return;
+    }
+
+    validPhotos.forEach(photo => {
         const photoElement = document.createElement('div');
         photoElement.className = 'rated-item';
         photoElement.innerHTML = `
             <div class="photo-item">
-                <img src="${photo.image_url}" alt="Oylanmış fotoğraf">
+                <img src="${photo.image_url}" alt="Oylanmış fotoğraf" onerror="this.onerror=null; this.src='default-photo.png'; this.alt='Fotoğraf yüklenemedi';">
                 <div class="rating-info">
                     <div class="user-info">
                         <span class="username">${photo.username}</span>
