@@ -1,6 +1,6 @@
 // API URLs
 const API_URL = {
-    RATINGS: 'https://vibrater.umuttopalak.com/items/ratings'
+    RATINGS: 'https://api.viberater.fun/items/ratings'
 };
 
 // API Headers
@@ -11,6 +11,15 @@ function getHeaders() {
         'Authorization': token ? `Bearer ${token}` : '',
         'Accept': 'application/json'
     };
+}
+
+// Çıkış yapma fonksiyonu
+function logout() {
+    // Token'ı localStorage'dan sil
+    localStorage.removeItem('token');
+    
+    // Kullanıcıyı login sayfasına yönlendir
+    window.location.href = '/login.html';
 }
 
 async function fetchStats() {
@@ -44,42 +53,59 @@ function displayStats(items) {
     
     container.innerHTML = '';
     
+    // Geçerli öğeleri filtrele
+    const validItems = items.filter(item => 
+        item && 
+        item.total_votes > 0 && 
+        item.image_url && 
+        item.image_url !== '' && 
+        !item.image_url.includes('300x300.jpg')
+    );
+    
+    if (validItems.length === 0) {
+        container.innerHTML = `
+            <div class="no-stats-message" style="text-align: center; padding: 50px; width: 100%;">
+                <h3>Henüz yeterli veri yok</h3>
+                <p>İstatistiklerin gösterilmesi için daha fazla oylama yapılması gerekiyor.</p>
+            </div>
+        `;
+        return;
+    }
+    
     // Ortalama puana göre sırala
-    const sortedItems = items.sort((a, b) => b.average_rating - a.average_rating);
+    const sortedItems = validItems.sort((a, b) => b.average_rating - a.average_rating);
     
     sortedItems.forEach((item, index) => {
-        if (item.total_votes > 0) {
-            const itemElement = document.createElement('div');
-            itemElement.className = 'person-card';
-            const rank = index + 1;
-            
-            // Sıralama simgesini belirle
-            let rankEmoji = '🏆';
-            if (rank === 1) {
-                rankEmoji = '👑';
-            } else if (rank === 2) {
-                rankEmoji = '🥈';
-            } else if (rank === 3) {
-                rankEmoji = '🥉';
-            }
-            
-            itemElement.innerHTML = `
-                <div class="rank-badge ${rank <= 3 ? 'top-rank' : ''}">
-                    <span class="rank-emoji">${rankEmoji}</span>
-                    <span class="rank-number">#${rank}</span>
-                </div>
-                <img src="${item.image_url}" alt="${item.title}" class="person-photo">
-                <div class="person-info">
-                    <h2 class="person-name">${item.title}</h2>
-                    <div class="vote-info">
-                        <span class="rating-score">⭐ ${item.average_rating.toFixed(1)}</span>
-                        <span class="vote-count" data-item-id="${item.id}">👥 ${item.total_votes}</span>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(itemElement);
+        const itemElement = document.createElement('div');
+        itemElement.className = 'person-card';
+        const rank = index + 1;
+        
+        // Sıralama simgesini belirle
+        let rankEmoji = '🏆';
+        if (rank === 1) {
+            rankEmoji = '👑';
+        } else if (rank === 2) {
+            rankEmoji = '🥈';
+        } else if (rank === 3) {
+            rankEmoji = '🥉';
         }
+        
+        itemElement.innerHTML = `
+            <div class="rank-badge ${rank <= 3 ? 'top-rank' : ''}">
+                <span class="rank-emoji">${rankEmoji}</span>
+                <span class="rank-number">#${rank}</span>
+            </div>
+            <img src="${item.image_url}" alt="${item.title}" class="person-photo" onerror="this.onerror=null; this.src='default-photo.png'; this.alt='Fotoğraf yüklenemedi';">
+            <div class="person-info">
+                <h2 class="person-name">${item.title}</h2>
+                <div class="vote-info">
+                    <span class="rating-score">⭐ ${item.average_rating.toFixed(1)}</span>
+                    <span class="vote-count" data-item-id="${item.id}">👥 ${item.total_votes}</span>
+                </div>
+            </div>
+        `;
+        
+        container.appendChild(itemElement);
     });
 }
 
